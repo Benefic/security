@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
+
     private final UserRepository userRepository;
 
     public Optional<User> findByUsername(String username) {
@@ -28,7 +29,8 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
+        Optional<User> userOptional = findByUsername(username);
+        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 
@@ -38,5 +40,15 @@ public class UserService implements UserDetailsService {
 
     public Optional<User> findBiId(long id) {
         return userRepository.findById(id);
+    }
+
+    public void incScore(User user) {
+        user.setScore(user.getScore() + 1);
+        userRepository.save(user);
+    }
+
+    public void decScore(User user) {
+        user.setScore(user.getScore() - 1);
+        userRepository.save(user);
     }
 }

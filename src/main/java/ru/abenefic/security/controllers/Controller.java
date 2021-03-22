@@ -21,23 +21,17 @@ public class Controller {
         this.userService = userService;
     }
 
-    @GetMapping
-    public String daoTestPage(Principal principal) {
-        //User user = getUser(principal);
-        return "authenticated: "; // + user.getUsername();
-    }
-
     @GetMapping("/inc")
     public boolean incScore(Principal principal) {
         User user = getUser(principal);
-        user.setScore(user.getScore() + 1);
+        userService.incScore(user);
         return true;
     }
 
     @GetMapping("/dec")
     public boolean decScore(Principal principal) {
         User user = getUser(principal);
-        user.setScore(user.getScore() - 1);
+        userService.decScore(user);
         return true;
     }
 

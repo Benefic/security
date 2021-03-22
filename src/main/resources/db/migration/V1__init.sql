@@ -3,15 +3,14 @@ create table users
     id       bigserial,
     username varchar(30) not null,
     password varchar(80) not null,
-    enabled  boolean     not null,
     score    smallint,
     primary key (id)
 );
 
 
-insert into users (username, password, enabled, score)
-values ('user', '$2a$10$VaXSN/Q6Ex3vvm53ECygD.dP7ZDnx05oT6Qv.ctVcSiiPaYKPxp0S', true, 0),
-       ('user1', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', true, 0);
+insert into users (username, password, score)
+values ('user', '$2a$10$VaXSN/Q6Ex3vvm53ECygD.dP7ZDnx05oT6Qv.ctVcSiiPaYKPxp0S', 0),
+       ('user1', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 0);
 
 create table roles
 (
